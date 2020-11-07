@@ -1,7 +1,6 @@
 import { Router } from 'express'
 
-import AuthenticateUserService from '../services/AuthenticateUserService'
-import UserMap from '../mappers/UserMap'
+import AuthenticateUserService from '@modules/users/services/AuthenticateUserService'
 
 const sessionsRouter = Router()
 
@@ -19,9 +18,9 @@ sessionsRouter.post('/', async (request, response) => {
     password
   })
 
-  const mappedUser = UserMap.toDTO(user);
+  delete user.password
 
-  return response.json({ mappedUser, token })
+  return response.json({ user, token })
 
 })
 

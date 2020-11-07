@@ -1,12 +1,11 @@
 import { Router } from 'express'
 import multer from 'multer'
-import uploadConfig from '../config/upload'
+import uploadConfig from '@config/upload'
 
 import ensureAuthenticated from '../middlewares/ensureAuthenticated'
 
-import UserMap from '../mappers/UserMap'
-import CreateUserService from '../services/CreateUserSrvice'
-import UpdateUserAvatarService from '../services/UpdateUserAvatarService'
+import CreateUserService from '@modules/users/services/CreateUserSrvice'
+import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarService'
 
 
 const usersRouter = Router()
@@ -23,9 +22,9 @@ usersRouter.post('/', async (request, response) => {
     password
   })
 
-  const mappedUser = UserMap.toDTO(user);
 
-  return response.json(mappedUser)
+
+  return response.json(user)
 
 })
 
@@ -38,8 +37,8 @@ usersRouter.patch('/avatar', ensureAuthenticated, upload.single('avatar'), async
     user_id: request.user.id,
     avatarFilename: request.file.filename
   })
-  const mappedUser = UserMap.toDTO(user);
-  return response.json(mappedUser)
+
+  return response.json(user)
 
 })
 
