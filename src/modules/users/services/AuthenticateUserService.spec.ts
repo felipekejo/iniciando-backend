@@ -36,7 +36,7 @@ describe('AuthenticateUser', () => {
     const fakeUsersRepository = new FakeUsersRepository()
     const fakeHashProvider = new FakeHashProvider()
     const authenticateUser = new AuthenticateUserService(fakeUsersRepository, fakeHashProvider)
-    expect(authenticateUser.execute({
+    await expect(authenticateUser.execute({
 
       email: 'johnndoe@example.com',
       password: '123456'
@@ -57,7 +57,7 @@ describe('AuthenticateUser', () => {
 
 
 
-    expect(authenticateUser.execute({
+    await expect(authenticateUser.execute({
 
       email: 'johnndoe@example.com',
       password: 'wrong-password'
