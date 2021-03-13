@@ -6,14 +6,20 @@ import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider'
 import AuthenticateUserService from './AuthenticateUserService'
 import CreateUserService from './CreateUserSrvice'
 
-
+let fakeUsersRepository: FakeUsersRepository
+let fakeHashProvider: FakeHashProvider
+let createUser: CreateUserService
+let authenticateUser: AuthenticateUserService
 describe('AuthenticateUser', () => {
-  it('should be able to Authenticate', async () => {
-    const fakeUsersRepository = new FakeUsersRepository()
-    const fakeHashProvider = new FakeHashProvider()
-    const createUser = new CreateUserService(fakeUsersRepository, fakeHashProvider)
+  beforeEach(() => {
+    fakeUsersRepository = new FakeUsersRepository()
+    fakeHashProvider = new FakeHashProvider()
+    createUser = new CreateUserService(fakeUsersRepository, fakeHashProvider)
+    authenticateUser = new AuthenticateUserService(fakeUsersRepository, fakeHashProvider)
+  })
 
-    const authenticateUser = new AuthenticateUserService(fakeUsersRepository, fakeHashProvider)
+  it('should be able to Authenticate', async () => {
+
 
     const user = await createUser.execute({
       name: 'John Doe',
@@ -33,9 +39,6 @@ describe('AuthenticateUser', () => {
 
   });
   it('should not be able to Authenticate with non existing user', async () => {
-    const fakeUsersRepository = new FakeUsersRepository()
-    const fakeHashProvider = new FakeHashProvider()
-    const authenticateUser = new AuthenticateUserService(fakeUsersRepository, fakeHashProvider)
     await expect(authenticateUser.execute({
 
       email: 'johnndoe@example.com',
@@ -43,12 +46,6 @@ describe('AuthenticateUser', () => {
     })).rejects.toBeInstanceOf(AppError);
   });
   it('should not be able to Authenticate with wrong password', async () => {
-    const fakeUsersRepository = new FakeUsersRepository()
-    const fakeHashProvider = new FakeHashProvider()
-    const createUser = new CreateUserService(fakeUsersRepository, fakeHashProvider)
-
-    const authenticateUser = new AuthenticateUserService(fakeUsersRepository, fakeHashProvider)
-
     await createUser.execute({
       name: 'John Doe',
       email: 'johnndoe@example.com',
