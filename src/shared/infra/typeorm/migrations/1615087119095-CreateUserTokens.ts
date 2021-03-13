@@ -26,12 +26,12 @@ export default class CreateUserTokens1615087119095 implements MigrationInterface
           },
           {
             name: 'created_at',
-            type: 'timestamp',
+            type: 'timestamptz',
             default: 'now()'
           },
           {
             name: 'updated_at',
-            type: 'timestamp',
+            type: 'timestamptz',
             default: 'now()'
           }
         ],
