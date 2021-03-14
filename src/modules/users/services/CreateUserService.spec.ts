@@ -3,7 +3,7 @@ import 'reflect-metadata'
 
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository'
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider'
-import CreateUserService from './CreateUserSrvice'
+import CreateUserService from './CreateUserService'
 
 let fakeUsersRepository: FakeUsersRepository
 let fakeHashProvider: FakeHashProvider
