@@ -15,7 +15,7 @@ class DiskStorageProvider implements IStorageProvider {
     })
   }
   public async saveFile(file: string): Promise<string> {
-    const originalPath = path.resolve(uploadConfig.uploadsFolder, file)
+    const originalPath = path.resolve(uploadConfig.tmpFolder, file)
     const fileType = mime.getType(originalPath)
     const fileContent = await fs.promises.readFile(originalPath)
 
