@@ -5,6 +5,7 @@ import AppError from '@shared/errors/AppError'
 import Appointment from '../infra/typeorm/entities/Appointment'
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository'
 import INotificationsRepository from '@modules/notifications/repositories/INotificationRepository'
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider'
 
 
 interface IRequest {
@@ -21,6 +22,8 @@ class CreateAppointmentService {
 
     @inject('NotificationRepository')
     private notificationRepository: INotificationsRepository,
+    @inject('CacheProvider')
+    private cacheProvider: ICacheProvider
   ) { }
 
 
@@ -60,6 +63,7 @@ class CreateAppointmentService {
       content: `Novo agendamento para dia ${dateFormatted}`
     })
 
+    await this.cacheProvider.invalidate(`provider-appointments:${provider_id}:${format(appointmentDate, 'yyyy-M-d')}`)
 
     return appointment
   }
